@@ -1,0 +1,3 @@
+rootProject.name = 'learnday-relative-paths'
+include 'client', 'server'
+

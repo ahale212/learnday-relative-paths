@@ -1,0 +1,28 @@
+import com.moowork.gradle.node.task.NodeTask
+
+version = '1.0'
+group = 'CTS-FNOL-Automation'
+
+buildscript {
+    dependencies {
+        classpath 'org.cloudfoundry:cf-gradle-plugin:1.1.1'
+        classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
+    }
+}
+
+task webpack(type: NodeTask, dependsOn: 'npmInstall') {
+    script = project.file('node_modules/.bin/webpack')
+}
+
+task build() {
+    dependsOn 'npm_cache_verify',
+            'npm_install',
+            webpack
+}
+
+task clean(type: Delete) {
+    delete 'build', 'dist'
+}
+
+apply plugin: 'com.moowork.node'
+apply from: "$projectDir/gradle/distribution.gradle"
